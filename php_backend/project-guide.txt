@@ -1,0 +1,256 @@
+PROJECT WORKING GUIDE — SMART PRESENCE: FACE RECOGNITION ATTENDANCE, BILLING & SUBSCRIPTION PLATFORM (ADVANCED VERSION)
+📘 Project Overview
+SmartPresence is an integrated platform combining a PHP-based web portal for organization and employee management with a Python (Tkinter + OpenCV) desktop application for facial recognition attendance, automated wage calculation, and subscription billing. The system supports multi‑organization login, OTP verification, real‑time attendance marking with voice feedback, Excel report generation, and secure data storage in MySQL.
+
+The project is divided into two main modules:
+
+🌐 Web Portal (HTML, CSS, JS, PHP, MySQL) — handles organization registration, employee management, admin dashboard, contact messages, and subscription plans.
+
+🧠 Python GUI (Tkinter, OpenCV, pyttsx3, openpyxl, bcrypt) — captures employee faces, trains the recognition model, marks attendance, and generates wage musters (via a Flask web interface).
+
+⚙️ Project Flow & Working
+🏁 1. Start from start.html
+The entry point of the system is start.html.
+From here, a new organization can register (if not already registered) or an existing organization can log in directly.
+
+🏢 2. Organization Registration
+On the registration page (register.php), the organization provides:
+
+Organization Name
+
+Email Address
+
+Password (hashed using PHP’s password_hash())
+
+Mobile Number
+
+Upload Organization Certificate (stored temporarily, verified via OTP)
+
+OTP Verification:
+A 6‑digit OTP is sent via SMS to the provided mobile number using Renflair SMS Gateway API.
+After successful OTP validation, the organization data is permanently stored in the organization_register table.
+
+🔐 3. Organization Login
+Web Portal Login (login.html → login.php): Uses email and password. Passwords are verified using password_verify() (PHP).
+
+Python GUI Login (main.py): The same credentials are used to log into the Tkinter application. The Python script fetches the stored hash from MySQL and validates it with bcrypt.checkpw() (compatible with PHP’s password_hash).
+
+Upon successful login, the Python app creates the required folder structure inside php_backend/data/ (if not present):
+
+text
+data/
+├── images/               # Employee face images (subfolders by emp_id)
+├── training/             # training_data.yml (LBPH model)
+└── attendance_reports/   # Excel files: monthly attendance & employee register
+🧑‍💼 4. Add New Employee (HR Panel)
+From the web dashboard (Dashboard.php), click Add New Employee, which redirects to HrLogin.html (separate HR login).
+After HR authentication, the Employee Registration Form (employeeForm.html) appears, requiring:
+
+Employee ID
+
+Full Name
+
+Email
+
+Password
+
+Date of Birth
+
+Category (Unskilled, Semi‑skilled, Skilled, Highly Skilled)
+
+Mobile Number (OTP verified again)
+
+Once OTP is verified, the employee is inserted into the employees table (linked to the current organization) and into the employees_master table (global uniqueness check).
+
+🔎 5. Search & Manage Employees (Web)
+The dashboard provides a real‑time search bar (AJAX) to find employees by name. The search results are fetched from the employees table for the logged‑in organization.
+An admin panel (admin/) is available for each organization (login with same credentials) to view:
+
+Total employees, present/absent today
+
+Category‑wise employee count
+
+All employee details with filter by category
+
+Daily attendance (present/absent lists)
+
+Contact messages submitted via contactus.html
+
+🧠 Python Section — Face Recognition System
+🐍 6. Run the Python Script
+From the php_backend folder, execute:
+
+bash
+python main.py
+A Tkinter login window appears. Enter the same email and password used for web login.
+
+🔑 7. Python Login (bcrypt verification)
+The script queries organization_register, retrieves the hashed password, and verifies it using bcrypt.
+Upon success, the main menu is shown with options:
+
+Add New Employee
+
+Take Attendance
+
+Show Attendance
+
+Generate Report
+
+Generate Wage Muster
+
+Logout
+
+🧍‍♂️ 8. Add Employee (Face Capture)
+Enter Employee ID and Name (must match database).
+
+Click Verify – the script checks the employees table for a matching record under the current organization.
+
+If verified, Take Image is enabled. Clicking it opens the webcam.
+
+The system captures 30 face images (auto‑detected with Haar cascades) and saves them in data/images/<emp_id>/.
+
+After capture, click Train Image. A progress window shows training status.
+The LBPH model is (re‑)trained on all images in data/images/ and saved as data/training/training_data.yml.
+The employee is also appended to the Employee Register Excel (data/attendance_reports/<org_name>_employee_register.xlsx).
+
+⏰ 9. Take Attendance
+From the main menu, click Take Attendance.
+
+The script loads training_data.yml and the employee register.
+
+The webcam opens and starts real‑time face detection.
+
+When a registered face is recognized with confidence < 50:
+
+The system checks if the employee has already been marked today (using the monthly attendance Excel).
+
+If not marked:
+
+Status is determined based on the time of day (P before 8:00, LM 8:00–9:00, A after 9:00).
+
+Attendance is recorded both in Excel (monthly sheet, with status in the day column) and in the MySQL attendance table (with fields: emp_id, org_id, date, status, time_in).
+
+A voice announcement (pyttsx3) confirms the marking.
+
+Press ESC to exit the attendance session; the Excel file is saved automatically.
+
+📅 10. Employee Register & Joining Record
+When a new employee is added via the Python app (after training), the Employee Register Excel is updated. This file serves as a master list of all employees (ID, name, join date, category). It is used during attendance to map recognized IDs to names.
+
+🧾 11. Wage Muster Generator (Flask Web Interface)
+From the Python main menu, click Generate Wage Muster. This:
+
+Launches a Flask web server (if not already running) on port 5000.
+
+Opens the default browser at http://127.0.0.1:5000.
+
+The web interface (wage_muster_generator/app.py) allows the user to:
+
+Enter organization details (name, tender number, month, contractor, work location).
+
+Upload an attendance Excel file (with columns: SR.NO, NAME, CATEGORY, WORKING DAYS, ATTENDANCE, GENDER).
+
+Automatically calculate:
+
+Daily wages based on category rates (Unskilled ₹805, Semi ₹893, Skilled ₹981, High ₹1065).
+
+EPF @12% (on min of earned wage and ₹15,000).
+
+ESIC @0.75% (only for Unskilled).
+
+Bonus @8.33% (only for Unskilled).
+
+Professional Tax (male/female slab‑wise).
+
+Download the generated wage muster Excel with all earnings and deductions.
+
+The Flask app does not store any data; files are deleted after 24 hours.
+
+🔧 Tech Stack Summary
+Component	Technology
+Frontend (Web)	HTML5, CSS3, JavaScript, Bootstrap, FontAwesome
+Backend (Web)	PHP 8+, MySQL
+Backend (AI)	Python 3.8+, OpenCV, LBPH Face Recognizer
+GUI	Tkinter
+Voice Output	pyttsx3
+Excel Reports	openpyxl, pandas
+Password Hashing	PHP password_hash() / Python bcrypt
+OTP Service	Renflair SMS Gateway API
+Web Server	XAMPP / WAMP (Apache + MySQL)
+💡 Important Notes
+Camera & Lighting: Ensure the webcam is connected and the face is well‑lit for accurate recognition.
+
+OTP API: OTP functionality requires a valid API key from Renflair SMS Gateway. Replace the key in the PHP files.
+
+Database: Both PHP and Python must connect to the same MySQL database (organization). Update credentials in connect.php and db_config in main.py.
+
+Training: Always retrain the model after adding new employees. The training data is saved in data/training/.
+
+Attendance Session: During attendance, the system checks for duplicate markings (per employee per day) and avoids double‑entry.
+
+Wage Muster Generator: The Flask server runs in the background. Close it manually or let the Python app clean it up on exit.
+
+🧩 Summary of Workflow
+Organization registers via web → OTP verification → stored in DB (hashed password).
+
+Organization logs in to web portal (PHP) and Python app (same credentials, bcrypt).
+
+HR adds employees via web → OTP verification → employees stored in DB.
+
+In Python app, employee ID/name verified → capture 30 face images → train model → employee appended to register Excel.
+
+Attendance marking in Python: face recognized → status determined → marked in monthly Excel & inserted into attendance table.
+
+Web dashboard shows real‑time stats (present/absent, category counts) and allows employee search.
+
+Admin panel (separate folder) provides detailed views of employees, attendance, and contact messages.
+
+Wage muster generation (optional) opens a Flask web tool that calculates wages and statutory deductions from uploaded attendance Excel.
+
+📂 Output Files
+data/attendance_reports/<org_name>_employee_register.xlsx – master list of employees.
+
+data/attendance_reports/<org_name>_<month>_<year>_attendance.xlsx – daily attendance records.
+
+data/training/training_data.yml – trained LBPH model.
+
+wage_muster_generator/generated/ – wage muster Excel files (temporary).
+
+Folder Structure: 
+php_backend/
++-- about.html
++-- connect.php
++-- contactUs.html
++-- contactUs.php
++-- Dashboard.php
++-- Employee-otp.php
++-- Employee-Verify-otp.php
++-- employeeForm.html
++-- employeeForm.php
++-- HrLogin.html
++-- HrLogin.php
++-- login.html
++-- login.php
++-- logout.php
++-- main.py
++-- organization.sql
++-- otp.php
++-- register.php
++-- resend_otp.php
++-- search_employee.php
++-- start.html
++-- data/
+	+-- attendance_reports/
+	+-- images/
+	+-- training/
++-- face_cascade/
++-- wage_muster_generator/ 
+	+-- app.py
+	+-- run_flask.py 
+	+-- generated/
+	+-- templates/
+	+-- uploads/
+	+-- utils/
+		+-- excel_reader.py
+		+-- excel_writer.py
+		+-- wage_calculator.py

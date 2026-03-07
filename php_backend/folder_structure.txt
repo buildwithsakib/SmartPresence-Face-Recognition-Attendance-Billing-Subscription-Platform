@@ -1,0 +1,42 @@
+php_backend/
++-- about.html
++-- connect.php
++-- contactUs.html
++-- contactUs.php
++-- Dashboard.php
++-- Employee-otp.php
++-- Employee-Verify-otp.php
++-- employeeForm.html
++-- employeeForm.php
++-- HrLogin.html
++-- HrLogin.php
++-- login.html
++-- login.php
++-- logout.php
++-- main.py
++-- organization.sql
++-- otp.php
++-- register.php
++-- resend_otp.php
++-- search_employee.php
++-- start.html
++-- data/
+	+-- attendance_reports/
+	+-- images/
+	+-- training/
++-- face_cascade/
++-- wage_muster_generator/ 
+	+-- app.py
+	+-- run_flask.py 
+	+-- generated/
+	+-- templates/
+	+-- uploads/
+	+-- utils/
+		+-- excel_reader.py
+		+-- excel_writer.py
+		+-- wage_calculator.py
+
+
+
+
+ 

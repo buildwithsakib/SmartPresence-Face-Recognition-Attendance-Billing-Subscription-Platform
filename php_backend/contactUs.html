@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Face Recognition Presence System</title>
+    <link rel="shortcut icon" href="contactuslogo.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #1abc9c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary), #1a2530);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Background Animation Elements */
+        .background-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .square {
+            position: absolute;
+            background: rgba(52, 152, 219, 0.05);
+            animation: rotate 20s infinite linear;
+        }
+        
+        .triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-color: transparent transparent rgba(26, 188, 156, 0.05) transparent;
+            animation: float 18s infinite ease-in-out reverse;
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            z-index: 10;
+            position: relative;
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .logo {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: #bdc3c7;
+        }
+        
+        /* Contact Form */
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .contact-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-group label i {
+            font-size: 1.2rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #95a5a6;
+        }
+        
+        .contact-container p {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #bdc3c7;
+            line-height: 1.6;
+        }
+        
+        /* Back Button */
+        .back-btn-container {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+        }
+        
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .back-btn:hover {
+            background: rgba(26, 188, 156, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 1rem;
+            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(26, 188, 156, 0.4);
+        }
+        
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .submit-btn:hover::after {
+            left: 100%;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #95a5a6;
+        }
+        
+        /* Contact Info - updated: only email and socials */
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .info-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            flex: 0 1 auto;
+            min-width: 200px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--light);
+        }
+        
+        .info-card:hover {
+            background: rgba(26, 188, 156, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        
+        .info-card:hover .info-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .info-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: var(--accent);
+        }
+        
+        .info-content p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #bdc3c7;
+        }
+        
+        /* Social specific colors on hover */
+        .info-card[data-social="linkedin"]:hover .info-icon { background: #0077b5; }
+        .info-card[data-social="github"]:hover .info-icon { background: #333; }
+        .info-card[data-social="instagram"]:hover .info-icon { background: #e4405f; }
+        .info-card[data-social="email"]:hover .info-icon { background: #2ecc71; }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(10px, 15px); }
+            50% { transform: translate(-5px, 20px); }
+            75% { transform: translate(15px, -10px); }
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .tagline { font-size: 1rem; }
+            .contact-container { padding: 1.5rem; }
+            .back-btn-container {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 1.5rem;
+            }
+            .info-card { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Elements -->
+    <div class="background-elements">
+        <div class="circle" style="width: 300px; height: 300px; top: 10%; left: 5%;"></div>
+        <div class="circle" style="width: 150px; height: 150px; top: 70%; left: 80%;"></div>
+        <div class="square" style="width: 200px; height: 200px; top: 20%; left: 85%;"></div>
+        <div class="square" style="width: 120px; height: 120px; top: 65%; left: 10%;"></div>
+        <div class="triangle" style="border-width: 0 100px 170px 100px; top: 40%; left: 25%;"></div>
+        <div class="triangle" style="border-width: 0 70px 120px 70px; top: 80%; left: 70%;"></div>
+    </div>
+    
+    <div class="container">
+        <div class="back-btn-container">
+            <a href="Dashboard.php" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+        
+        <header>
+            <div class="logo">
+                <i class="fas fa-envelope-open-text"></i>
+            </div>
+            <h1>Contact Us</h1>
+            <p class="tagline">We're here to assist you with any questions or feedback.</p>
+        </header>
+        
+        <div class="contact-container">
+            <!-- Updated paragraph: more concise and mentions social media -->
+            <p>Got questions about our SmartPresence: Face Recognition Attendance, Billing & Subscription Platform? Need technical support or want to share your feedback? Reach out via email or connect with us on social media. We'll get back to you as soon as possible.</p>
+            
+            <form action="contactUs.php" method="post" class="contact-form">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject"><i class="fas fa-tag"></i> Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="Enter the subject" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message"><i class="fas fa-comment-alt"></i> Message</label>
+                    <textarea id="message" name="message" placeholder="Write your message here" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+            
+            <!-- Contact Info: only email and social media links (removed location & phone) -->
+            <div class="contact-info">
+                <!-- Email card (kept) -->
+                <a href="mailto:sakibbhaisk7@gmail.com" class="info-card" data-social="email">
+                    <div class="info-icon" style="background: #2ecc71;">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Email Us</h3>
+                        <p>sakibbhaisk7@gmail.com</p>
+                    </div>
+                </a>
+                
+                <!-- Social: LinkedIn -->
+                <a href="https://www.linkedin.com/in/sakib-shaikh-b5755b397?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" class="info-card" data-social="linkedin">
+                    <div class="info-icon" style="background: #0077b5;">
+                        <i class="fab fa-linkedin-in"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>LinkedIn</h3>
+                        <p>Connect with us</p>
+                    </div>
+                </a>
+                
+                <!-- Social: GitHub -->
+                <a href="https://github.com/sakib92s" target="_blank" class="info-card" data-social="github">
+                    <div class="info-icon" style="background: #333;">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>GitHub</h3>
+                        <p>Check our repos</p>
+                    </div>
+                </a>
+                
+                <!-- Social: Instagram -->
+                <a href="https://instagram.com/sakib__.2006" target="_blank" class="info-card" data-social="instagram">
+                    <div class="info-icon" style="background: #e4405f;">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Instagram</h3>
+                        <p>Follow us</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>SmartPresence: Face Recognition Attendance, Billing & Subscription Platform</p>
+        <p>© 2025 Developed by Sakib Shaikh</p>
+    </footer>
+    
+    <script>
+        function createBackgroundElements() {
+            const container = document.querySelector('.background-elements');
+            const types = ['circle', 'square', 'triangle'];
+            const colors = [
+                'rgba(26, 188, 156, 0.05)',
+                'rgba(52, 152, 219, 0.05)',
+                'rgba(155, 89, 182, 0.05)',
+                'rgba(231, 76, 60, 0.05)'
+            ];
+            
+            for (let i = 0; i < 8; i++) {
+                const type = types[Math.floor(Math.random() * types.length)];
+                const element = document.createElement('div');
+                element.className = type;
+                
+                const size = Math.random() * 150 + 50;
+                const top = Math.random() * 100;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 20 + 10;
+                
+                if (type === 'triangle') {
+                    const borderWidth = size / 2;
+                    element.style.borderWidth = `0 ${borderWidth}px ${size}px ${borderWidth}px`;
+                    element.style.borderColor = `transparent transparent ${colors[Math.floor(Math.random() * colors.length)]} transparent`;
+                } else {
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                }
+                
+                element.style.top = `${top}%`;
+                element.style.left = `${left}%`;
+                element.style.animationDuration = `${duration}s`;
+                element.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(element);
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createBackgroundElements();
+            
+            // Form submission animation
+            const form = document.querySelector('.contact-form');
+            const submitBtn = document.querySelector('.submit-btn');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const originalContent = submitBtn.innerHTML;
+                
+                // Show loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                    submitBtn.style.background = 'linear-gradient(to right, #2ecc71, #27ae60)';
+                    
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalContent;
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = 'linear-gradient(to right, var(--accent), var(--secondary))';
+                        form.submit(); // Actually submit the form
+                    }, 2000);
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
