@@ -12,6 +12,9 @@ php_backend/
 +-- HrLogin.php
 +-- login.html
 +-- login.php
++-- forgot_password_otp.php
++-- forgot_password_reset.php
++-- forgot_password.php
 +-- logout.php
 +-- main.py
 +-- organization.sql
