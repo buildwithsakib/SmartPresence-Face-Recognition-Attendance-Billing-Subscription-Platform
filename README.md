@@ -49,6 +49,24 @@ Login using your registered email and password.
 
 After successful login, you will be redirected to the main dashboard.
 
+🔑 3.1 Forgot Password (NEW)
+
+If an organization forgets its password, the system now provides a secure **Forgot Password** feature.
+
+On the login page, users can click the **Forgot Password** option.
+
+The recovery process works as follows:
+
+1. The user enters the **registered Email ID and Mobile Number**.
+2. The system checks whether the organization exists in the database and verifies that both details match the registered records.
+3. If the details are valid, an **OTP is sent to the registered mobile number** using the Renflair SMS Gateway API.
+4. The user must enter the correct OTP for verification.
+5. After successful OTP verification, the user is allowed to **create a new password**.
+6. The new password is securely stored in the **MySQL database using password hashing**.
+7. Once updated, the organization can log in again using the new password.
+
+This ensures secure password recovery while preventing unauthorized access.
+
 🧑‍💼 4. Add New Employee (HR Panel)
 
 From the dashboard:
