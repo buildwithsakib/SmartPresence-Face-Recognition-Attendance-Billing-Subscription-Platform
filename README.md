@@ -1,6 +1,8 @@
-# SmartPresence – Face Recognition Attendance, Billing & Subscription Platform
+<img width="1349" height="600" alt="image" src="https://github.com/user-attachments/assets/1cddc2f6-7132-4a3c-b48e-d30b013811c5" /># SmartPresence – Face Recognition Attendance, Billing & Subscription Platform
 
 An advanced hybrid attendance management system that combines a **PHP-based Web Portal** with a **Python Face Recognition Application**. The platform enables organizations to manage employees, record attendance using facial recognition, generate wage muster reports, and maintain payroll-ready records using a centralized **MySQL database**.
+
+![SmartPresence-Face-Recognition-Attendance-Billing-Subscription-Platform Dashboard](php_backend/screenshots/start.png)
 
 ---
 
