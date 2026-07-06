@@ -7,14 +7,12 @@ An advanced hybrid attendance management system that combines a **PHP-based Web 
 ## 📖 Table of Contents
 
 * [Project Overview](#-project-overview)
-* [System Architecture](#-system-architecture)
 * [Features](#-features)
 * [Project Workflow](#-project-workflow)
 * [Web Portal](#-web-portal)
 * [Python Face Recognition System](#-python-face-recognition-system)
 * [Generated Reports](#-generated-reports)
 * [Technology Stack](#-technology-stack)
-* [Important Notes](#-important-notes)
 * [Complete Workflow](#-complete-workflow)
 
 ---
