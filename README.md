@@ -1,255 +1,438 @@
-SmartPresence-Face-Recognition-Attendance-Billing-Subscription-Platform
-📘 Project Overview
+# SmartPresence – Face Recognition Attendance, Billing & Subscription Platform
 
-SmartPresence-Face-Recognition-Attendance-Billing-Subscription-Platform is an advanced hybrid system combining a PHP-based Web Portal and a Python-based Face Recognition System.
+An advanced hybrid attendance management system that combines a **PHP-based Web Portal** with a **Python Face Recognition Application**. The platform enables organizations to manage employees, record attendance using facial recognition, generate wage muster reports, and maintain payroll-ready records using a centralized **MySQL database**.
 
-It allows organizations to manage employees, record attendance using a webcam, generate wage muster reports, and maintain payroll-ready records, with all data securely stored in a MySQL database.
+---
 
-🧩 System Modules
+## 📖 Table of Contents
 
-The system works in two main parts:
+* [Project Overview](#-project-overview)
+* [System Architecture](#-system-architecture)
+* [Features](#-features)
+* [Project Workflow](#-project-workflow)
+* [Web Portal](#-web-portal)
+* [Python Face Recognition System](#-python-face-recognition-system)
+* [Generated Reports](#-generated-reports)
+* [Technology Stack](#-technology-stack)
+* [Important Notes](#-important-notes)
+* [Complete Workflow](#-complete-workflow)
 
-🌐 Web Portal (HTML, CSS, JS, PHP, MySQL)
-→ Organization registration, login, HR panel, employee management, wage muster interface
+---
 
-🧠 Python GUI (Tkinter + OpenCV)
-→ Face registration, model training, and automated attendance marking
+# 📘 Project Overview
 
-⚙️ Project Working Guide
-🏁 1. Start from start.html
+SmartPresence is designed for organizations that require a complete attendance and payroll solution.
 
-The entry point of the system is start.html.
+The system provides:
 
-New organizations can register
+* Organization Registration & Login
+* OTP Verification
+* Employee Management
+* Face Recognition Attendance
+* Automatic Model Training
+* Attendance Report Generation
+* Wage Muster Generation
+* Payroll-Ready Excel Reports
+* Voice Confirmation during Attendance
 
-Existing organizations can log in directly
+All information is securely stored in a centralized **MySQL database** shared by both the PHP web portal and the Python application.
 
-🏢 2. Organization Registration
+---
 
-On the registration page, fill in:
+# 🏗️ System Architecture
 
-Organization Name
+The project consists of two main modules.
 
-Email Address
+## 🌐 Web Portal
 
-Mobile Number
+Built using:
 
-Password
+* HTML5
+* CSS3
+* JavaScript
+* Bootstrap
+* PHP
+* MySQL
 
-When the mobile number is entered, an OTP is sent for verification.
+Functions:
 
-📱 Important:
-To send OTP messages, you need to purchase an SMS API from Renflair SMS Gateway.
+* Organization Registration
+* Login
+* HR Dashboard
+* Employee Management
+* Wage Muster Generation
+* Report Download
 
-After OTP verification, organization details are saved in the MySQL database.
+---
 
-🔐 3. Organization Login
+## 🧠 Face Recognition Application
 
-Login using your registered email and password.
+Built using:
 
-After successful login, you will be redirected to the main dashboard.
+* Python
+* Tkinter
+* OpenCV
+* Dlib
+* Pandas
+* OpenPyXL
+* pyttsx3
 
-🔑 3.1 Forgot Password (NEW)
+Functions:
 
-If an organization forgets its password, the system now provides a secure **Forgot Password** feature.
+* Face Registration
+* Automatic Model Training
+* Real-Time Face Recognition
+* Attendance Recording
+* Voice Feedback
 
-On the login page, users can click the **Forgot Password** option.
+---
 
-The recovery process works as follows:
+# ✨ Features
 
-1. The user enters the **registered Email ID and Mobile Number**.
-2. The system checks whether the organization exists in the database and verifies that both details match the registered records.
-3. If the details are valid, an **OTP is sent to the registered mobile number** using the Renflair SMS Gateway API.
-4. The user must enter the correct OTP for verification.
-5. After successful OTP verification, the user is allowed to **create a new password**.
-6. The new password is securely stored in the **MySQL database using password hashing**.
-7. Once updated, the organization can log in again using the new password.
+### Organization Module
 
-This ensures secure password recovery while preventing unauthorized access.
+* Organization Registration
+* Secure Login
+* OTP Verification
+* Forgot Password
+* Password Hashing
 
-🧑‍💼 4. Add New Employee (HR Panel)
+### HR Module
 
-From the dashboard:
+* Add Employee
+* Search Employee
+* Edit Employee
+* Delete Employee
+* Employee Verification via OTP
 
-Click on Add New Employee
+### Face Recognition Module
 
-HR login page will appear
+* Capture Employee Images
+* Automatic Face Model Training
+* Real-Time Attendance
+* Voice Confirmation
 
-After HR login, Employee Registration Form opens
+### Payroll Module
+
+* Attendance Excel Generation
+* Joining Record Generation
+* Wage Muster Generation
+* Payroll Ready Reports
+
+---
+
+# 🚀 Project Workflow
+
+## 1. Start the Web Portal
+
+Open:
+
+```text
+start.html
+```
+
+From here organizations can:
+
+* Register
+* Login
+
+---
+
+## 2. Organization Registration
 
 Enter:
 
-Employee ID
+* Organization Name
+* Email Address
+* Mobile Number
+* Password
 
-Name
+The system sends an OTP to the registered mobile number using the **Renflair SMS Gateway API**.
 
-Department
+After successful verification, the organization details are saved in the MySQL database.
 
-Mobile Number (for OTP)
+---
 
-Email, etc.
+## 3. Organization Login
 
-Employee OTP verification is done via SMS API.
+Login using the registered:
 
-After verification, employee details are stored in the database.
+* Email
+* Password
 
-🔎 5. Search & Manage Employees
+After successful authentication, the organization dashboard opens.
 
-From the dashboard, HR can:
+---
 
-Search employees by Name, ID, or Department
+## 4. Forgot Password
 
-View employee details
+If the password is forgotten:
 
-Edit or remove employees
+1. Enter the registered Email ID.
+2. Enter the registered Mobile Number.
+3. Verify both details.
+4. Receive an OTP on the registered mobile number.
+5. Verify the OTP.
+6. Create a new password.
+7. Password is stored using secure password hashing.
+8. Login with the updated password.
 
-🧠 Python Section (Face Recognition System)
-🐍 6. Run the Python Script
+---
 
-Open the project folder and run:
+# 🌐 Web Portal
 
+## Add New Employee
+
+After logging in:
+
+Dashboard
+
+↓
+
+Add New Employee
+
+↓
+
+HR Login
+
+↓
+
+Employee Registration Form
+
+Enter:
+
+* Employee ID
+* Employee Name
+* Department
+* Mobile Number
+* Email Address
+
+OTP verification is completed before storing employee information in the database.
+
+---
+
+## Employee Management
+
+HR can:
+
+* Search employees
+* Edit employee details
+* Delete employees
+* View employee information
+
+Search filters:
+
+* Employee ID
+* Name
+* Department
+
+---
+
+# 🧠 Python Face Recognition System
+
+## Run the Application
+
+```bash
 python main.py
+```
 
+A Tkinter login window appears.
 
-A Tkinter login window will appear.
+---
 
-🔑 7. Python Login (Organization Credentials)
+## Login
 
-Login using the same email and password used on the web portal.
+Use the same credentials created on the web portal.
 
-This ensures only registered organizations can access the attendance system.
+This ensures that only registered organizations can access the attendance system.
 
-🧍‍♂️ 8. Add Employee (Face Capture)
+---
 
-After login, click Add Employee.
+## Face Registration
+
+Click:
+
+**Add Employee**
 
 Enter:
 
-Employee ID (must match database)
+* Employee ID
+* Employee Name
 
-Employee Name (must match database)
+Both values must exactly match the MySQL database.
 
-Click Capture Image.
+Click:
 
-Webcam opens
-
-System captures 30 face images automatically
-
-Images are stored in the images/ folder
-
-Model is trained automatically after capture
-
-⏰ 9. Take Attendance
-
-Click Take Attendance from the main Tkinter window.
-
-Webcam starts real-time face scanning
-
-When a face is recognized:
-
-Attendance is marked automatically
-
-Excel file is updated with:
-
-Employee ID
-
-Name
-
-Date
-
-Time Stamp
-
-Voice feedback confirms attendance
-
-Attendance file is stored in:
-
-php_backend/attendance_reports/
-
-📅 10. Joining Record
-
-When a new employee is added:
-
-A separate Excel joining record file is created
-
-This maintains a log of all employee entries
-
-🧾 11. Wage Muster Generation (NEW)
-
-After attendance is recorded, HR/Admin can generate Wage Muster Reports.
-
-From the dashboard:
-
-Open Wage Muster section
-
-Select or upload the attendance Excel file
-
-Click Generate Wage Muster
+**Capture Image**
 
 The system automatically:
 
-Reads attendance data
+* Opens the webcam
+* Captures 30 face images
+* Saves images in:
 
-Calculates total working days & present days
+```text
+images/
+```
 
-Calculates wage and salary components
+* Trains the recognition model automatically
 
-Generates a formatted Wage Muster Excel file
+---
 
-Generated file is stored in:
+## Attendance
 
+Click:
+
+**Take Attendance**
+
+The application:
+
+* Starts webcam
+* Detects faces
+* Recognizes employees
+* Marks attendance automatically
+* Gives voice confirmation
+
+Attendance includes:
+
+* Employee ID
+* Employee Name
+* Date
+* Time
+
+Attendance reports are stored in:
+
+```text
+php_backend/attendance_reports/
+```
+
+---
+
+## Joining Record
+
+Whenever a new employee is registered:
+
+A joining record Excel file is automatically generated.
+
+This maintains a permanent log of employee registrations.
+
+---
+
+# 💰 Wage Muster Generation
+
+Open the **Wage Muster** section in the HR Dashboard.
+
+Steps:
+
+1. Select or upload the attendance Excel file.
+2. Click **Generate Wage Muster**.
+3. The system automatically:
+
+   * Reads attendance records
+   * Calculates working days
+   * Calculates present days
+   * Computes salary and wage details
+   * Generates a formatted Wage Muster Excel report
+
+Generated reports are stored in:
+
+```text
 php_backend/wage_muster_generator/generated/
+```
 
+These reports are ready for payroll processing.
 
-HR can download the Wage Muster report from the web portal for payroll use.
+---
 
-🧾 Output Files Generated
+# 📂 Generated Reports
 
-Attendance Excel File → Daily attendance records
+The system generates the following files automatically:
 
-Employee Joining File → Joining log of employees
+| Report                  | Description                 |
+| ----------------------- | --------------------------- |
+| Attendance Report       | Daily attendance records    |
+| Employee Joining Record | Employee joining history    |
+| Wage Muster Report      | Payroll-ready salary report |
 
-Wage Muster Excel File → Salary & wage calculation report
+---
 
-💡 Important Notes
+# 💻 Technology Stack
 
-Ensure webcam is connected and proper lighting is available
+| Component        | Technology                         |
+| ---------------- | ---------------------------------- |
+| Frontend         | HTML5, CSS3, JavaScript, Bootstrap |
+| Web Backend      | PHP                                |
+| AI Backend       | Python 3.8+                        |
+| Database         | MySQL                              |
+| Face Recognition | OpenCV, Dlib                       |
+| GUI              | Tkinter                            |
+| Voice Feedback   | pyttsx3                            |
+| Excel Reports    | Pandas, OpenPyXL                   |
+| PDF Support      | ReportLab                          |
+| OTP Service      | Renflair SMS Gateway API           |
+| Local Server     | XAMPP / WAMP                       |
 
-OTP feature requires a valid Renflair SMS Gateway API key
+---
 
-Python and PHP must use the same MySQL database
+# ⚠️ Important Notes
 
-XAMPP (Apache + MySQL) must be running before Python app
+* Ensure the webcam is properly connected.
+* Good lighting improves face recognition accuracy.
+* XAMPP/WAMP must be running before launching the Python application.
+* PHP and Python must use the same MySQL database.
+* A valid Renflair SMS Gateway API key is required for OTP services.
+* Retrain the face recognition model whenever a new employee is added.
+* Wage Muster reports can only be generated after attendance records are available.
 
-Retrain the model after adding new employees
+---
 
-Wage Muster can only be generated after attendance files exist
+# 🔄 Complete Workflow
 
-🔧 Tech Stack Summary
-Component	Technology
-Frontend	HTML5, CSS3, JavaScript, Bootstrap
-Backend (Web)	PHP, MySQL
-Backend (AI)	Python 3.8+, OpenCV, Dlib
-Database	MySQL
-GUI	Tkinter
-Voice Output	pyttsx3
-Reports	Pandas, OpenPyXL, ReportLab
-Wage Muster	Python, Pandas, OpenPyXL
-OTP Service	Renflair SMS Gateway API
-Local Server	XAMPP / WAMP
-🧩 Summary of Workflow
+```text
+Organization Registration
+        │
+        ▼
+OTP Verification
+        │
+        ▼
+Organization Login
+        │
+        ▼
+HR Login
+        │
+        ▼
+Employee Registration
+        │
+        ▼
+Employee OTP Verification
+        │
+        ▼
+Employee Stored in MySQL
+        │
+        ▼
+Python Face Registration
+        │
+        ▼
+Automatic Model Training
+        │
+        ▼
+Real-Time Face Recognition
+        │
+        ▼
+Attendance Recorded
+        │
+        ▼
+Attendance Excel Generated
+        │
+        ▼
+Wage Muster Generated
+        │
+        ▼
+Payroll Ready Report
+```
 
-Organization registers & verifies via OTP → stored in database
+---
 
-HR adds employees with OTP verification → employees stored in database
+# 📌 Summary
 
-Python GUI login → face registration & training
-
-Attendance marked via face recognition
-
-Attendance Excel generated
-
-➡️ HR generates Wage Muster from attendance file
-
-➡️ Wage Muster Excel report generated for payroll
-
-All data stored securely for HR, attendance & payroll use
+SmartPresence provides a complete attendance and payroll ecosystem by integrating a PHP-based HR management portal with a Python-powered face recognition system. The platform automates employee attendance, maintains centralized records, generates payroll-ready reports, and simplifies workforce management through secure OTP verification and AI-based facial recognition.
